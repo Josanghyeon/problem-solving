@@ -10,8 +10,28 @@ int main()
     for (int i = 1; i <= N; i++)
         Queue[++rear] = i;
 
-    for (int i = 0; i <= N; i++)
+    int Delete = K - 1;
+    printf("<");
+    for (int i = 0; i < N; i++)
     {
-        Queue[K - 1] = 
+        front = Delete % N;
+        if (i == N - 1)
+        {
+            printf("%d>", Queue[front]);
+            Queue[front] = 0;
+        }
+        else
+        {
+            printf("%d, ", Queue[front]);
+            Queue[front] = 0;
+            int temp = 0;
+            while (temp < K)
+            {
+                Delete++;
+                front = Delete % N;
+                if (Queue[front] != 0)
+                    temp++;
+            }
+        }
     }
 }
