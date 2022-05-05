@@ -2,38 +2,28 @@ function solution(info, query) {
   var answer = [];
   let map = {};
 
-  function combination(infos, score, map, start) {
+  function combination(infos, score, start) {
     let key = infos.join(""); // 키 값으로 쓸거 합쳐주기
-    let value = map[key]; // 값 있는지 없는지 확인해주기
-
-    if (value) {
-      // 값이 있으면 push
-      map[key].push(score);
-    } else {
-      // 값이 없으면 프로퍼티 만들어주기
-      map[key] = [score];
-    }
-
+    // 값이 있으면 push
+    if (map[key]) map[key].push(score);
+    // 값이 없으면 프로퍼티 만들어주기
+    else map[key] = [score];
     // -를 이용해 조합 만들기
     for (let i = start; i < infos.length; i++) {
       let combiArr = [...infos]; // 전개연산자 ...
       combiArr[i] = "-";
-
-      combination(combiArr, score, map, i + 1);
+      combination(combiArr, score, i + 1);
     }
   }
 
   // 이분탐색
   function binarySearch(map2, key2, score2) {
     let scoreArr = map2[key2];
-
     if (scoreArr) {
       var start = 0;
       var end = scoreArr.length;
-
       while (start < end) {
         var mid = Math.floor((start + end) / 2);
-
         if (scoreArr[mid] >= score2) {
           // 현재 가르키는 값보다 내가 찾는 값이
           end = mid;
@@ -41,7 +31,6 @@ function solution(info, query) {
           start = mid + 1;
         }
       }
-
       return scoreArr.length - start;
     } else return 0;
   }
@@ -50,8 +39,7 @@ function solution(info, query) {
   for (let i = 0; i < info.length; i++) {
     let infos = info[i].split(" ");
     let score = infos.pop();
-
-    combination(infos, score, map, 0);
+    combination(infos, score, 0);
   }
 
   // 2. 이분탐색을 위해 정렬
@@ -63,12 +51,12 @@ function solution(info, query) {
   for (let i = 0; i < query.length; i++) {
     let querys = query[i].replace(/ and /g, "").split(" ");
     let score = Number(querys.pop());
-
     answer.push(binarySearch(map, querys.join(""), score));
   }
 
   return answer;
 }
+
 console.log(
   solution(
     [
@@ -79,6 +67,13 @@ console.log(
       "java backend junior chicken 80",
       "python backend senior chicken 50",
     ],
-    ["- and - and - and - 150"]
+    [
+      "java and backend and junior and pizza 100",
+      "python and frontend and senior and chicken 200",
+      "cpp and - and senior and pizza 250",
+      "- and backend and senior and - 150",
+      "- and - and - and chicken 100",
+      "- and - and - and - 150",
+    ]
   )
 );
