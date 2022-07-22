@@ -2,13 +2,16 @@
 
 using namespace std;
 
+int Pactorial(int N)
+{
+    if (N <= 1)
+        return 1;
+    return N * Pactorial(N - 1);
+}
+
 int main()
 {
-    int N, i;
-    int pactorial = 1;
+    int N;
     cin >> N;
-
-    for (i = 1; i <= N; i++)
-        pactorial *= i;
-    cout << pactorial;
+    cout << Pactorial(N);
 }
