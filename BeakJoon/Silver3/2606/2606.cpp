@@ -20,7 +20,7 @@ int main()
         cin >> x >> y;
         v[x - 1].push_back(y - 1);
         v[y - 1].push_back(x - 1);
-    }
+    }`
 
     check[0] = true;
     for (i = 0; i < v[0].size(); i++)
